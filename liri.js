@@ -4,12 +4,15 @@ require("dotenv").config();
 var keys = require("./keys.js");
 
 // link to api keys in keys.js file
+var fs = require("fs");
 var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
 var request = require('request');
 
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
+
+
 
 
 
@@ -109,5 +112,32 @@ if (a === 'movie-this') {
 
 }
 if (a === 'do-what-it-says') {
-    // look at process.argv[3] for doing what it says
+    fs.readFile("random.txt", "utf8", function(err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        var whatItSaysArr = data.split(",");
+
+        a = whatItSaysArr[0];
+        doTheThing = whatItSaysArr[1];
+        spotify.search({ type: 'track', query: doTheThing })
+        .then(function (response) {
+
+            console.log("\n===============================\n");
+            // Artist
+            console.log(response.tracks.items[0].artists[0].name);
+            // Song name
+            console.log(response.tracks.items[0].name);
+            // preview link from Spotify
+            console.log(response.tracks.items[0].external_urls.spotify);
+            // The album
+            console.log(response.tracks.items[0].album.name);
+            console.log("\n===============================\n");
+
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+
+    })
 }
