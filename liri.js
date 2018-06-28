@@ -57,27 +57,8 @@ if (a === 'my-tweets') {
 }
 if (a === 'spotify-this-song') {
     // if doTheThing variable is blank then....
-    if (doTheThing = '') {
+    if (doTheThing === '') {
         doTheThing = 'The Sign';
-        // look at process.argv[3] for the song info
-        spotify.search({ type: 'track', query: doTheThing })
-            .then(function (response) {
-
-                console.log("\n===============================\n");
-                // Artist
-                console.log(response.tracks.items[0].artists[0].name);
-                // Song name
-                console.log(response.tracks.items[0].name);
-                // preview link from Spotify
-                console.log(response.tracks.items[0].external_urls.spotify);
-                // The album
-                console.log(response.tracks.items[0].album.name);
-                console.log("\n===============================\n");
-
-            })
-            .catch(function (err) {
-                console.log(err);
-            });
     }
     // else look at doTheThing for the song info
     spotify.search({ type: 'track', query: doTheThing })
