@@ -38,19 +38,24 @@ for (var i = 3; i < nodeArgs.length; i++) {
 
 
 if (a === 'my-tweets') {
+    var params = {blaiseiscool1: "node.js", count: 20}
     // show tweets
-    client.get('favorites/list', function(error, tweets, response) {
-        if(error) throw error;
-        console.log(JSON.parse(tweets));  // The favorites.
-        console.log(JSON.parse(response)[0].text);  // Raw response object.
-      });
+    client.get('statuses/user_timeline', params, function(error, tweets, response) {
+        if(!error) {
+            tweets.forEach(function(tweet) {
+                console.log(tweet.text);
+            })
+        
+        
+    }  
+    });
 }
 if (a === 'spotify-this-song') {
 
     // look at process.argv[3] for the song info
     spotify.search({ type: 'track', query: doTheThing })
         .then(function(response) {
-            console.log(JSON.parse(response));
+            console.log(response);
         })
         .catch(function(err) {
             console.log(err);
@@ -65,8 +70,7 @@ if (a === 'movie-this') {
         // If the request is successful
         if (!error && response.statusCode === 200) {
       
-          // Parse the body of the site and recover just the imdbRating
-          // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
+          // give me my stuff like this
           console.log("===============================");
           console.log("Title: "+JSON.parse(body).Title);
           console.log("Year of release: "+JSON.parse(body).Year);
